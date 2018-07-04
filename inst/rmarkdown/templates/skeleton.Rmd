@@ -1,0 +1,30 @@
+---
+cruiseID: "C/SXXX"
+title: "Cruise Report: [Name of Semester]"
+subtitle: "Scientific Activities Undertaken Aboard the SSV [Name of Ship]"
+location: "[Start Location -- End Location"
+cruise_date: "[Start Date] -- [End Date]"
+author: "Ben Harden"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  pdf_document:
+    template: seareport.latex
+header-includes:
+   - \usepackage{graphicx}
+   - \usepackage{longtable}
+   - \usepackage{pdflscape}
+   - \newcommand{\blandscape}{\begin{landscape}}
+   - \newcommand{\elandscape}{\end{landscape}}
+cite_author: "Harden, B. E."
+cite_yr: "2018"
+titlepage: true
+toc: true
+lot: true
+lof: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(cache=TRUE, message = FALSE, echo = FALSE, warning = FALSE, error = FALSE, fig.align="center")
+library(sea)
+library(ggplot2)
+```
