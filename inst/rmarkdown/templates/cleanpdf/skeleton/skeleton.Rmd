@@ -1,0 +1,11 @@
+---
+title: "My Document"
+output: 
+  pdf_document:
+    template: cleanpdf.latex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
