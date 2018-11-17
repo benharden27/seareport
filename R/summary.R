@@ -1,4 +1,3 @@
-
 #' Create a station summary sheet from packaged data
 #'
 #' @param output
