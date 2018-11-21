@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-create_summary <- function(data, cruiseID = NULL) {
+create_summary <- function(data, cruiseID = NULL, tz = 0) {
 
   if (is.null(cruiseID)) {
     cruiseID <- stringr::str_extract(data$neuston$station,".*(?=-[0-9]{3})")[1]
@@ -35,7 +35,7 @@ create_summary <- function(data, cruiseID = NULL) {
                           sea::get_ctd_meta(data$ctd,"time")))
 
   for (i in 1:nrow(ctd)) {
-    ctd$cdttm[i] <- data$elg$dttm[which.min(oce::geodDist(data$elg$lon,data$elg$lat,ctd$clon[i],ctd$clat[i]))]
+    ctd$cdttm[i] <- data$elg$dttm[which.min(oce::geodDist(data$elg$lon,data$elg$lat,ctd$clon[i],ctd$clat[i]))] + tz * 60 * 60
   }
 
 
