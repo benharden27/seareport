@@ -73,6 +73,77 @@ print_table <- function(dfo, SigF = NULL, caption = NULL, hline.after = c(0),
 }
 
 
+#' Plot a table summary
+#'
+#' @param file
+#' @param caption
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+table_summary <- function(file, caption = NULL, ...) {
+
+  dfa <- sea::read_datasheet(file)
+  df <- sea::read_datasheet(file,skip=1)
+  names(df) <- names(dfa)
+  names(df) <- stringr::str_replace_all(names(df)," ",".")
+
+  xi <- sort(append(grep('Meter.Net',names(df)),grep('Meter.Net',names(df))+1))
+  df$Meter.Net <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  xi <- sort(append(grep('Secchi.Disk',names(df)),grep('Secchi.Disk',names(df))+1))
+  df$Secchi.Disk <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  xi <- sort(append(grep('Hydrocast',names(df)),grep('Hydrocast',names(df))+1))
+  df$Hydrocast <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi])&df[,xi]!='')+0)))),1,1)
+  xi <- sort(append(grep('Free.CTD',names(df)),grep('Free.CTD',names(df))+1))
+  df$Free.CTD <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  xi <- sort(append(grep('RBR',names(df)),grep('RBR',names(df))+1))
+  if(any(!is.na(df[,xi]))) {
+    # for (i in xi) {
+    #   df[nchar(df[,i])==0,i] <- NA
+    # }
+    df$RBR <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  } else {
+    df$RBR <- rep('',nrow(df))
+  }
+  xi <- sort(append(grep('Shipek',names(df)),grep('Shipek',names(df))+1))
+  df$Shipek.Grab <- substr(gsub('[0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  xi <- sort(append(grep('Phyto',names(df)),grep('Phyto',names(df))+1))
+  df$Phyto.Net <- substr(gsub('[A-Z0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+  xi <- sort(append(grep('Hydrophone',names(df)),grep('Hydrophone',names(df))+1))
+  df$hydrophone <- substr(gsub('[A-Z0-9]','X',gsub('0','',as.character(rowSums((!is.na(df[,xi]))+0)))),1,1)
+
+  Time <- as.numeric(df[[grep('Start',names(df))[1]]])
+  Time <- format(Time,format="%H:%M")
+
+  Date <- format(df$Date,format="%Y-%m-%d")
+  # Create Output data frame
+  dfo <- tibble::tibble(Station = df$Station.Number,
+                        Date = Date,
+                        Time = Time,
+                        Lon = df$LonDisplay,
+                        Lat = df$LatDisplay,
+                        NT = toupper(df$Neuston.Tow),
+                        MN = toupper(df$Meter.Net),
+                        PN = toupper(df$Phyto.Net),
+                        HC = toupper(df$Hydrocast),
+                        CTD = toupper(df$Free.CTD),
+                        RBR = toupper(df$RBR),
+                        SG = toupper(df$Shipek.Grab),
+                        SD = toupper(df$Secchi.Disk),
+                        HP = toupper(df$hydrophone),
+                        # SS = df$Surface.Station,
+                        genLoc = df$General.Locale)
+
+  colnames(dfo) <- c('Station','Date','Time','Longitude','Latitude','NT','MN','PN','HC','CTD','RBR','SG','SD','HP','General Locale')
+
+  dfo<- dfo[!sapply(dfo, function (k) all(k==''))]
+
+  print_table(dfo,caption = caption, ...)
+
+}
+
 #' Make a formated neuston table
 #'
 #' @param df
@@ -142,7 +213,7 @@ table_nekton <- function(df, caption = NULL, ...) {
 #' @examples
 table_hydro <- function(df, caption = NULL, ...) {
 
-  dfo <- dplyr::select(df,station, dttm, lon,lat, bottle, z, no3, po4, sio2, pH, alk, chla, temp, sal)
+  dfo <- dplyr::select(df,station, dttm, lat,lon, bottle, z, no3, po4, sio2, pH, alk, chla, temp, sal)
   dfo <- dplyr::mutate(dfo, dttm = format(dfo$dttm,"%Y-%m-%d %H:%M"))
 
   rep_station <- duplicated(dfo$station)
@@ -167,5 +238,28 @@ table_hydro <- function(df, caption = NULL, ...) {
 
 }
 
+#' Creates surface station summary table
+#'
+#' @param filename Path of the file to be read in
+#' @param saveLoc Folder to save the output
+#' @export
+#' @examples
+table_surfsamp <- function(df, caption = NULL, ...) {
 
+  dfo <- dplyr::select(df, station, dttm_local, lat, lon, no3, po4, sio2, pH, alk, chla, temp, sal)
+  dfo <- dplyr::mutate(dfo, dttm_local = format(dfo$dttm_local,"%Y-%m-%d %H:%M"))
+
+  colnames(dfo) <- c('Station','Time',"Lat","Lon",'NO$_3^{-1}$','PO$_4^{-3}$','Si0$_2^-2$','pH','Alk','Chl-a','Temp','Sal')
+  secondRow <- c('','(local)',"$^\\circ$N","$^\\circ$E",'[$\\mu$M]','[$\\mu$M]','[$\\mu$M]','','','[mg/L]','[$^\\circ$C]','')
+  SigF <- c(20,20,2,2,2,2,2,2,2,3,1,2)
+
+  emptyCols <- colSums(is.na(dfo)) == nrow(dfo)
+  dfo<- dfo[!emptyCols]
+  secondRow <- secondRow[!emptyCols]
+  SigF <- SigF[!emptyCols]
+  SigF <- append(20,SigF)
+
+  print_table(dfo, SigF=SigF, secondRow=secondRow, caption = caption, ...)
+
+}
 

@@ -646,7 +646,7 @@ $endif$
 \pagestyle{fancy}
 \fancyhead{}
 \fancyfoot{}
-\lhead{$title$}
+\lhead{$cruiseID$ $title$}
 \chead{}
 \rhead{$date$}
 \lfoot{$for(author)$$author$$sep$, $endfor$}
@@ -705,6 +705,11 @@ $endif$
 \vfill
 $if(titlepage-image)$
 \includegraphics[width=\linewidth]{$titlepage-image$}
+$if(titlepage-image-caption)$
+\footnotesize
+{$titlepage-image-caption$}
+\normalsize
+$endif$
 $endif$
 \vfill
 \noindent {\huge \textbf{\textsf{$cruiseID$ $title$}}}

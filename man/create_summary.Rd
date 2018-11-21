@@ -4,7 +4,7 @@
 \alias{create_summary}
 \title{Create a station summary sheet from packaged data}
 \usage{
-create_summary(data)
+create_summary(data, cruiseID = NULL)
 }
 \arguments{
 \item{output}{}
