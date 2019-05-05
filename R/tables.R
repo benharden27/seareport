@@ -62,7 +62,9 @@ print_table <- function(dfo, SigF = NULL, caption = NULL, hline.after = c(0),
                               floating = FALSE,
                               include.rownames = FALSE,
                               caption.placement = 'top',
-                              comment = FALSE, ...)
+                              comment = FALSE,
+                              sanitize.text.function = function(x) {x},
+                              ...)
   if(save) {
     fileout <- gsub(" ","",fileout)
     fileConn<-file(fileout)
