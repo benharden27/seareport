@@ -2,7 +2,7 @@
 cruiseID: "C/SXXX"
 title: "Cruise Report: [Name of Semester]"
 subtitle: "Scientific Activities Undertaken Aboard the SSV [Name of Ship]"
-location: "[Start Location -- End Location"
+location: "[Start Location] -- [End Location]"
 cruise_date: "[Start Date] -- [End Date]"
 author: "Ben Harden"
 date: "`r format(Sys.time(), '%d %B %Y')`"
@@ -26,7 +26,38 @@ lof: true
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(cache=TRUE, message = FALSE, echo = FALSE, warning = FALSE, error = FALSE, fig.align="center")
 library(sea)
-library(ggplot2)
+library(tidyverse)
+library(seareport)
 ```
 
+\newpage
+
+# Ships Company {-#ships-company}
+
+\scriptsize
+
+```{r}
+df <- read_csv("ships_company.csv", col_names = FALSE)
+knitr::kable(df, col.names = NULL, table.envir = "table*")
+```
+
+\newpage
+
+\normalsize
+
 # Introduction
+
+
+# Cruise Narrative
+
+
+# Sampling
+
+
+## Data notes
+
+
+# Figures
+
+
+# Tables
