@@ -163,15 +163,15 @@ table_neuston <- function(df, caption = NULL, ...) {
   dfo <- dplyr::mutate(dfo,
                        dttm_in = format(dfo$dttm_in,"%Y-%m-%d %H:%M"),
                        biodens = biodens * 1000)
-  dfo <- tibble::add_column(dfo,
-                            moon = paste0(df$moon_phase*100,"% (",stringr::str_to_title(df$moon_mode),")"),
-                            .after = 4)
+  # dfo <- tibble::add_column(dfo,
+  #                           moon = paste0(df$moon_phase*100,"% (",stringr::str_to_title(df$moon_mode),")"),
+  #                           .after = 4)
 
 
-  colnames(dfo) <- c("Station","Time","Lat","Lon","Moon Phase","Temperature","Salinity","Chl-a","Tow Area","Zooplankton","Zooplankton")
-  secondRow <-c("","[local]","[$^\\circ$N]","[$^\\circ$E]","[\\% full]","[$^\\circ$C]","","Fluoroesence","[m$^2$]","Biovolume","Density")
-  thirdRow <- c("","","","","","","","[Volts]","","[mL]","[$\\mu$L/km$^2$]")
-  SigF <- c(20,20,20,2,2,20,1,2,2,0,1,2)
+  colnames(dfo) <- c("Station","Time","Lat","Lon","Temperature","Salinity","Chl-a","Tow Area","Zooplankton","Zooplankton")
+  secondRow <-c("","[local]","[$^\\circ$N]","[$^\\circ$E]","[$^\\circ$C]","","Fluoroesence","[m$^2$]","Biovolume","Density")
+  thirdRow <- c("","","","","","","[Volts]","","[mL]","[$\\mu$L/km$^2$]")
+  SigF <- c(20,20,20,2,2,1,2,2,0,1,2)
 
   print_table(dfo,caption=caption,SigF=SigF,secondRow=secondRow,thirdRow=thirdRow,...)
 
@@ -226,7 +226,7 @@ table_hydro <- function(df, caption = NULL, ...) {
 
   hline_vec <- c(which(rep_station==F)-1,nrow(dfo))
 
-  colnames(dfo) <- c('Station','Time',"Lat","Lon",'Bottle','Depth','NO$_3^{-1}$','PO$_4^{-3}$','Si0$_2^-2$','pH','Alk','Chl-a','Temp','Sal')
+  colnames(dfo) <- c('Station','Time',"Lat","Lon",'Bottle','Depth','NO$_3^{-2}$','PO$_4^{-3}$','Si0$_2^-2$','pH','Alk','Chl-a','Temp','Sal')
   secondRow <- c('','(local)',"$^\\circ$N","$^\\circ$E","",'[m]','[$\\mu$M]','[$\\mu$M]','[$\\mu$M]','','','[mg/L]','[$^\\circ$C]','')
   SigF <- c(20,20,2,2,20,0,2,2,2,2,2,3,1,2)
 
@@ -251,7 +251,7 @@ table_surfsamp <- function(df, caption = NULL, ...) {
   dfo <- dplyr::select(df, station, dttm_local, lat, lon, no3, po4, sio2, pH, alk, chla, temp, sal)
   dfo <- dplyr::mutate(dfo, dttm_local = format(dfo$dttm_local,"%Y-%m-%d %H:%M"))
 
-  colnames(dfo) <- c('Station','Time',"Lat","Lon",'NO$_3^{-1}$','PO$_4^{-3}$','Si0$_2^-2$','pH','Alk','Chl-a','Temp','Sal')
+  colnames(dfo) <- c('Station','Time',"Lat","Lon",'NO$_3^{-2}$','PO$_4^{-3}$','Si0$_2^-2$','pH','Alk','Chl-a','Temp','Sal')
   secondRow <- c('','(local)',"$^\\circ$N","$^\\circ$E",'[$\\mu$M]','[$\\mu$M]','[$\\mu$M]','','','[mg/L]','[$^\\circ$C]','')
   SigF <- c(20,20,2,2,2,2,2,2,2,3,1,2)
 
