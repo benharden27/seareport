@@ -1,0 +1,10 @@
+---
+output: 
+  pdf_document:
+    template: simplepdf.latex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
