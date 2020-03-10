@@ -9,6 +9,9 @@ table_nekton(df, caption = NULL, ...)
 \arguments{
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Make formated table of Neuston nekton
 }

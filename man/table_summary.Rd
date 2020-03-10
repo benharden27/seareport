@@ -9,6 +9,9 @@ table_summary(file, caption = NULL, ...)
 \arguments{
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Plot a table summary
 }

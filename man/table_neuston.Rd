@@ -9,6 +9,9 @@ table_neuston(df, caption = NULL, ...)
 \arguments{
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Make a formated neuston table
 }

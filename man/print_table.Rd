@@ -4,12 +4,23 @@
 \alias{print_table}
 \title{Print a table of data}
 \usage{
-print_table(dfo, SigF = NULL, caption = NULL, hline.after = c(0),
-  secondRow = NULL, thirdRow = NULL, save = FALSE,
-  fileout = "table_output.tex", ...)
+print_table(
+  dfo,
+  SigF = NULL,
+  caption = NULL,
+  hline.after = c(0),
+  secondRow = NULL,
+  thirdRow = NULL,
+  save = FALSE,
+  fileout = "table_output.tex",
+  ...
+)
 }
 \arguments{
 \item{fileout}{}
+}
+\value{
+
 }
 \description{
 Print a table of data

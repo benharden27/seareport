@@ -1,0 +1,58 @@
+---
+titlepage-image: images/cover.jpg
+cruiseID: "C/SXXX"
+title: "Your Title Here"
+subtitle: "Your subtitle here"
+location: "[Start Location] -- [End Location]"
+cruise_date: "[Start Date] -- [End Date]"
+author:
+  - "Author 1, Affiliation 1"
+  - "Author 2, Afflliation 2"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  pdf_document:
+    template: osreport.latex
+header-includes:
+   - \usepackage{graphicx}
+   - \usepackage{longtable}
+   - \usepackage{pdflscape}
+   - \newcommand{\blandscape}{\begin{landscape}}
+   - \newcommand{\elandscape}{\end{landscape}}
+cite_author: "Last1"
+cite_yr: "`r format(Sys.time(), '%Y')`"
+titlepage: true
+toc: true
+lot: true
+lof: true
+---
+
+```{r setup, include = FALSE}
+# set/change any chunk default settings
+knitr::opts_chunk$set(cache=TRUE, message = FALSE, echo = FALSE, warning = FALSE, error = FALSE, fig.align = "center")
+
+# load in packages, data and do any preprocessing
+library(tidyverse)
+```
+
+\newpage
+
+# Introduction
+
+```{r example-chunk}
+ggplot
+
+```
+
+# Methods
+
+
+# Sampling
+
+
+## Data notes
+
+
+# Figures
+
+
+# Tables

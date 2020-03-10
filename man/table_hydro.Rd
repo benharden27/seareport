@@ -9,6 +9,9 @@ table_hydro(df, caption = NULL, ...)
 \arguments{
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Make a Hydrowork Table
 }

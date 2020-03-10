@@ -9,6 +9,9 @@ create_summary(data, cruiseID = NULL, tz = 0, inc_ss = FALSE)
 \arguments{
 \item{output}{}
 }
+\value{
+
+}
 \description{
 Create a station summary sheet from packaged data
 }
